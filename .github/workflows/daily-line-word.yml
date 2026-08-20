@@ -29,6 +29,7 @@ jobs:
       - name: Convert audio to m4a and measure duration
         run: |
           if [ -f audio/word-of-the-day.mp3 ]; then
+            sudo apt-get update -y && sudo apt-get install -y ffmpeg
             ffmpeg -y -i audio/word-of-the-day.mp3 audio/word-of-the-day.m4a
             DURATION_MS=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 audio/word-of-the-day.m4a | awk '{printf "%d", $1*1000}')
             echo "HAS_AUDIO=true" >> "$GITHUB_ENV"
