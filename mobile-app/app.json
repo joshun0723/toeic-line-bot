@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "TOEIC Full Score",
+    "slug": "toeic-full-score-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#1e3a5f"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.jo.toeicfullscore"
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}

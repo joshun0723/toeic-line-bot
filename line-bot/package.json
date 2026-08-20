@@ -1,0 +1,15 @@
+{
+  "name": "toeic-line-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "每日透過 LINE Messaging API 推播多益單字",
+  "main": "send-daily-word.js",
+  "scripts": {
+    "send": "node send-daily-word.js",
+    "get-user-id": "node get-follower-id.js",
+    "get-user-id-webhook": "node get-my-user-id.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
