@@ -1,0 +1,62 @@
+name: Daily LINE TOEIC Word
+
+on:
+  schedule:
+    # 23:00 UTC = 08:00 (JST, UTC+9) 隔天早上八點推播
+    - cron: "0 23 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  send-word:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generate word-of-the-day audio (best-effort)
+        working-directory: line-bot
+        continue-on-error: true
+        run: node generate-audio.js
+
+      - name: Convert audio to m4a and measure duration
+        run: |
+          if [ -f audio/word-of-the-day.mp3 ]; then
+            ffmpeg -y -i audio/word-of-the-day.mp3 audio/word-of-the-day.m4a
+            DURATION_MS=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 audio/word-of-the-day.m4a | awk '{printf "%d", $1*1000}')
+            echo "HAS_AUDIO=true" >> "$GITHUB_ENV"
+            echo "AUDIO_DURATION_MS=$DURATION_MS" >> "$GITHUB_ENV"
+          else
+            echo "HAS_AUDIO=false" >> "$GITHUB_ENV"
+          fi
+
+      - name: Commit audio file and build public URL
+        if: env.HAS_AUDIO == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add audio/word-of-the-day.m4a
+          if git diff --cached --quiet; then
+            echo "no change"
+          else
+            git commit -m "chore: update daily word audio"
+            git push
+          fi
+          SHA=$(git rev-parse HEAD)
+          echo "AUDIO_URL=https://raw.githubusercontent.com/${{ github.repository }}/$SHA/audio/word-of-the-day.m4a" >> "$GITHUB_ENV"
+
+      - name: Send daily LINE word
+        working-directory: line-bot
+        env:
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+          LINE_AUDIO_URL: ${{ env.AUDIO_URL }}
+          LINE_AUDIO_DURATION_MS: ${{ env.AUDIO_DURATION_MS }}
+        run: node send-daily-word.js
