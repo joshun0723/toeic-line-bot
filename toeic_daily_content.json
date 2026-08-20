@@ -1,0 +1,239 @@
+{
+  "description": "多益晨間通勤讀書包 — 涵蓋單字/文法/閱讀/聽力四大項目，搭配 LINE 每日推播，設計給約45分鐘通勤時間使用。",
+  "grammar_points": [
+    {
+      "id": 1,
+      "topic": "關係代名詞 who / which / that",
+      "explanation_zh": "who 指人，which 指物；逗號後的非限定用法子句只能用 which 或 who，不能用 that。",
+      "example_en": "The employee who received the award will give a speech.",
+      "example_zh": "獲獎的那位員工將會致詞。",
+      "question_stem": "The proposal, ___ was submitted last week, has been approved.",
+      "options": ["who", "which", "what", "whom"],
+      "correct_index": 1,
+      "answer_explanation_zh": "which 用來指代物（proposal），且逗號後的非限定子句只能用 which，不能用 that。"
+    },
+    {
+      "id": 2,
+      "topic": "現在完成式 vs 過去簡單式",
+      "explanation_zh": "現在完成式(have/has+p.p.)強調動作持續到現在；過去簡單式強調過去某個明確時間點。",
+      "example_en": "She has worked here for five years.",
+      "example_zh": "她已經在這裡工作五年了（持續到現在）。",
+      "question_stem": "Mr. Lee ___ the company since 2015.",
+      "options": ["works", "worked", "has worked", "working"],
+      "correct_index": 2,
+      "answer_explanation_zh": "since 2015 表示從過去持續到現在，須用現在完成式 has worked。"
+    },
+    {
+      "id": 3,
+      "topic": "假設語氣（與現在事實相反）",
+      "explanation_zh": "與現在事實相反的假設，if 子句 be 動詞一律用 were，主要子句用 would/could + 原形動詞。",
+      "example_en": "If I were the manager, I would approve the request immediately.",
+      "example_zh": "如果我是經理，我會立刻核准這項請求。",
+      "question_stem": "If the budget ___ larger, we could hire more staff.",
+      "options": ["is", "was", "were", "will be"],
+      "correct_index": 2,
+      "answer_explanation_zh": "與現在事實相反的假設句，be動詞不分人稱一律用 were。"
+    },
+    {
+      "id": 4,
+      "topic": "分詞構句",
+      "explanation_zh": "分詞邏輯主詞與句子主詞一致時，主動關係用 V-ing，被動/完成關係用 V-ed。",
+      "example_en": "Having finished the report, she went home early.",
+      "example_zh": "完成報告後，她提早回家了。",
+      "question_stem": "___ by the CEO, the new policy was implemented immediately.",
+      "options": ["Approve", "Approving", "Approved", "To approve"],
+      "correct_index": 2,
+      "answer_explanation_zh": "policy 是被 CEO 核准（被動關係），分詞構句須用過去分詞 Approved。"
+    },
+    {
+      "id": 5,
+      "topic": "介系詞慣用搭配 in / on / at",
+      "explanation_zh": "in 用於較長時間（月、年）、on 用於日期、at 用於精確時刻，但 on the morning of + 日期是固定用法例外。",
+      "example_en": "The meeting is scheduled at 3 P.M. on Monday in March.",
+      "example_zh": "會議訂在三月的星期一下午三點。",
+      "question_stem": "The conference will be held ___ the morning of June 5.",
+      "options": ["in", "on", "at", "by"],
+      "correct_index": 1,
+      "answer_explanation_zh": "雖然是「早上」，但後面接特定日期時，固定用 on the morning of + 日期，這是常考的介系詞慣用例外。"
+    },
+    {
+      "id": 6,
+      "topic": "because vs because of",
+      "explanation_zh": "because 後面接子句（主詞+動詞），because of 後面接名詞或動名詞片語。",
+      "example_en": "The flight was delayed because of bad weather.",
+      "example_zh": "班機因為天氣不好而延誤。",
+      "question_stem": "The event was postponed ___ the sudden storm.",
+      "options": ["because", "because of", "although", "since"],
+      "correct_index": 1,
+      "answer_explanation_zh": "storm 是名詞，後面沒有子句，所以要用 because of。"
+    },
+    {
+      "id": 7,
+      "topic": "被動語態",
+      "explanation_zh": "當主詞是動作的承受者而非執行者時，用 be + 過去分詞的被動語態。",
+      "example_en": "The report was reviewed by three managers before submission.",
+      "example_zh": "這份報告在送出前被三位經理審查過。",
+      "question_stem": "All applications ___ by the HR department before the interview stage.",
+      "options": ["review", "reviews", "are reviewed", "reviewing"],
+      "correct_index": 2,
+      "answer_explanation_zh": "applications 是被審查（承受動作），須用被動語態 are reviewed。"
+    },
+    {
+      "id": 8,
+      "topic": "比較級 vs 最高級",
+      "explanation_zh": "兩者比較用比較級(-er/more)+than；三者以上比較用最高級(-est/most)+the。",
+      "example_en": "This model is more efficient than the previous one.",
+      "example_zh": "這個型號比前一代更有效率。",
+      "question_stem": "Of all the candidates, Ms. Chen has the ___ experience.",
+      "options": ["more", "most", "much", "many"],
+      "correct_index": 1,
+      "answer_explanation_zh": "of all the candidates 表示三者以上比較，須用最高級 the most。"
+    },
+    {
+      "id": 9,
+      "topic": "情態助動詞表推測",
+      "explanation_zh": "must 表高度肯定的推測（一定）；should 表預期（應該會）；may/might 表較低確定性（可能）。",
+      "example_en": "The shipment should arrive by Friday if there are no delays.",
+      "example_zh": "如果沒有延誤，貨物應該星期五前會到。",
+      "question_stem": "Given the positive reviews, the product ___ sell well.",
+      "options": ["must", "should", "can", "need"],
+      "correct_index": 1,
+      "answer_explanation_zh": "根據正面評價做出「應該會」的預期推測，should 最適合。"
+    },
+    {
+      "id": 10,
+      "topic": "不定詞 vs 動名詞",
+      "explanation_zh": "decide/plan/agree 後固定接不定詞(to V)；avoid/consider/suggest 後固定接動名詞(V-ing)。",
+      "example_en": "The board is considering hiring a consultant.",
+      "example_zh": "董事會正在考慮聘請一位顧問。",
+      "question_stem": "The board is considering ___ the merger next quarter.",
+      "options": ["to announce", "announce", "announcing", "announced"],
+      "correct_index": 2,
+      "answer_explanation_zh": "consider 後面固定接動名詞(V-ing)，所以用 announcing。"
+    }
+  ],
+  "reading_passages": [
+    {
+      "id": 1,
+      "title_zh": "會議改期通知信",
+      "passage_en": "To: All Marketing Staff\nFrom: Grace Lin, Marketing Director\nSubject: Meeting Rescheduled\n\nDear Team,\n\nDue to a scheduling conflict, tomorrow's marketing strategy meeting has been moved from 10 A.M. to 2 P.M. The location remains the same, Conference Room B. Please review the attached quarterly report before the meeting, as we will be discussing the Q3 budget allocation in detail. If you are unable to attend at the new time, please notify me by the end of today.\n\nBest regards,\nGrace Lin",
+      "questions": [
+        { "q": "Why was the meeting rescheduled?", "options": ["The location changed", "There was a scheduling conflict", "The budget report was late", "The director was on leave"], "correct_index": 1 },
+        { "q": "What should employees do before the meeting?", "options": ["Book a new conference room", "Contact Grace Lin directly", "Review the quarterly report", "Submit their own budget requests"], "correct_index": 2 }
+      ]
+    },
+    {
+      "id": 2,
+      "title_zh": "停車場整修公告",
+      "passage_en": "NOTICE TO ALL EMPLOYEES\n\nThe main parking garage will be closed for resurfacing from Monday, September 8 through Friday, September 12. During this period, employees are asked to use the temporary lot on Fifth Avenue, two blocks north of the office. A shuttle service will run every 15 minutes between the temporary lot and the main building from 7:30 to 9:30 A.M. and 5:00 to 7:00 P.M. We apologize for any inconvenience.",
+      "questions": [
+        { "q": "How long will the parking garage be closed?", "options": ["One day", "Three days", "Five days", "Two weeks"], "correct_index": 2 },
+        { "q": "What is available during the closure?", "options": ["Free taxi vouchers", "A shuttle service", "Extra visitor parking", "Reserved spaces downtown"], "correct_index": 1 }
+      ]
+    },
+    {
+      "id": 3,
+      "title_zh": "辦公設備特賣廣告",
+      "passage_en": "OFFICE FURNITURE CLEARANCE SALE\n\nUpgrade your workspace for less! From October 1 to October 15, TechDesk Furniture is offering up to 40% off all ergonomic chairs and adjustable standing desks. Orders over $300 qualify for free delivery within the city. Visit our showroom at 88 Harbor Road or shop online. Members of our loyalty program receive an additional 10% discount at checkout.",
+      "questions": [
+        { "q": "What is being advertised?", "options": ["A software subscription", "Office furniture", "A moving service", "A catering service"], "correct_index": 1 },
+        { "q": "How can customers get an extra discount?", "options": ["By paying in cash", "By ordering before September", "By joining the loyalty program", "By visiting the showroom twice"], "correct_index": 2 }
+      ]
+    },
+    {
+      "id": 4,
+      "title_zh": "公司合併備忘錄",
+      "passage_en": "MEMO\n\nTo: All Staff\nFrom: Executive Office\nRe: Merger with Bright Path Consulting\n\nWe are pleased to announce that, effective November 1, our company will merge with Bright Path Consulting. All current employees will retain their positions, and there will be no immediate changes to reporting structures. Over the next two months, a transition team will hold information sessions to answer questions about benefits and future projects.",
+      "questions": [
+        { "q": "What will happen on November 1?", "options": ["The office will relocate", "The merger will take effect", "Benefits will be cancelled", "A new CEO will be appointed"], "correct_index": 1 },
+        { "q": "How will employees learn more about the changes?", "options": ["Through a printed handbook", "By attending information sessions", "By calling the HR hotline", "Through a company-wide survey"], "correct_index": 1 }
+      ]
+    },
+    {
+      "id": 5,
+      "title_zh": "徵才啟事",
+      "passage_en": "POSITION AVAILABLE: Marketing Coordinator\n\nRiverstone Media is seeking a detail-oriented Marketing Coordinator. Responsibilities include managing social media accounts, coordinating with external vendors, and assisting in the planning of promotional events. Candidates should have at least two years of relevant experience and strong written communication skills. Interested applicants should submit a resume and cover letter by October 20.",
+      "questions": [
+        { "q": "What is a required qualification for the position?", "options": ["A graduate degree", "Two years of experience", "Fluency in a second language", "A valid driver's license"], "correct_index": 1 },
+        { "q": "How should candidates apply?", "options": ["By visiting the office in person", "By calling the HR department", "By submitting materials via email/letter", "By completing an online quiz"], "correct_index": 2 }
+      ]
+    },
+    {
+      "id": 6,
+      "title_zh": "客訴回覆信",
+      "passage_en": "Dear Ms. Alvarez,\n\nThank you for bringing the delayed delivery of your order to our attention. We sincerely apologize. After reviewing your case, we found the delay was due to an error at our regional warehouse. As compensation, we have issued a full refund of the shipping fee and applied a 15% discount code to your account. Your package is now confirmed to arrive by Thursday.\n\nSincerely,\nCustomer Service Team",
+      "questions": [
+        { "q": "What caused the delay?", "options": ["A payment issue", "A warehouse error", "A weather event", "A customs delay"], "correct_index": 1 },
+        { "q": "What did the company offer as compensation?", "options": ["A replacement item", "A refund of the shipping fee and a discount", "A free gift", "An upgraded membership"], "correct_index": 1 }
+      ]
+    },
+    {
+      "id": 7,
+      "title_zh": "新產品上市報導",
+      "passage_en": "Local tech company Nexlo Innovations unveiled its newest product, the SmartDesk Pro, at a press event last Thursday. The desk is equipped with built-in wireless charging and posture-tracking sensors. According to CEO Daniel Kim, the desk was designed in response to growing employee concerns about sedentary work habits. Early reviewers have praised its sleek design, though some noted that the companion mobile app still needs improvement.",
+      "questions": [
+        { "q": "What feature does the SmartDesk Pro include?", "options": ["A built-in printer", "Posture-tracking sensors", "A coffee warmer", "Noise-cancelling speakers"], "correct_index": 1 },
+        { "q": "What criticism did early reviewers mention?", "options": ["The price is too high", "The desk is too heavy", "The mobile app needs improvement", "The design is outdated"], "correct_index": 2 }
+      ]
+    },
+    {
+      "id": 8,
+      "title_zh": "系統維護通知",
+      "passage_en": "SYSTEM MAINTENANCE NOTICE\n\nOur online ordering platform will be temporarily unavailable on Saturday, August 30, from 1:00 to 5:00 A.M. for scheduled system upgrades. During this window, customers will be unable to place new orders or track shipments. All other services, including phone support, will remain fully operational. We recommend completing any urgent orders before the maintenance window begins.",
+      "questions": [
+        { "q": "What will be unavailable during the maintenance window?", "options": ["Phone support", "The online ordering platform", "The company's physical stores", "Email communication"], "correct_index": 1 },
+        { "q": "What is recommended before the maintenance begins?", "options": ["Contacting customer support", "Updating account passwords", "Completing urgent orders", "Downloading a new app"], "correct_index": 2 }
+      ]
+    }
+  ],
+  "listening_scripts": [
+    {
+      "id": 1,
+      "topic_zh": "機場延誤廣播",
+      "script_en": "Attention passengers. Flight 205 to Chicago has been delayed due to weather conditions in the area. The new departure time is now 3:45 P.M. We apologize for any inconvenience and ask that you remain in the gate area for further updates.",
+      "questions": [{ "q": "Why was the flight delayed?", "options": ["Mechanical problems", "Weather conditions", "A staffing shortage", "A security issue"], "correct_index": 1 }]
+    },
+    {
+      "id": 2,
+      "topic_zh": "店家公休語音",
+      "script_en": "Thank you for calling Green Leaf Grocery. Please note that our store will be closed this Monday for a company-wide staff training event. We will resume our regular hours, 8 A.M. to 9 P.M., starting Tuesday. If you have an urgent inquiry, please leave a message after the tone.",
+      "questions": [{ "q": "Why is the store closed on Monday?", "options": ["A public holiday", "A staff training event", "A power outage", "An inventory count"], "correct_index": 1 }]
+    },
+    {
+      "id": 3,
+      "topic_zh": "天氣預報",
+      "script_en": "And now for your local weather update. Today will be mostly sunny with a high of 24 degrees. However, we're tracking a cold front that will move into the area tomorrow evening, bringing rain and a significant drop in temperature. Commuters should expect wet road conditions on Thursday morning.",
+      "questions": [{ "q": "What weather change is expected tomorrow evening?", "options": ["A heat wave", "A cold front bringing rain", "A snowstorm", "Strong winds only"], "correct_index": 1 }]
+    },
+    {
+      "id": 4,
+      "topic_zh": "廣播廣告",
+      "script_en": "Looking for a better way to manage your finances? Try BudgetWise, the app that helps you track spending, set savings goals, and receive real-time alerts. For a limited time, new users can enjoy three months of premium features absolutely free. Download BudgetWise today.",
+      "questions": [{ "q": "What is being offered to new users?", "options": ["A cash reward", "Three months of free premium features", "A discount on a laptop", "A referral bonus"], "correct_index": 1 }]
+    },
+    {
+      "id": 5,
+      "topic_zh": "消防演習廣播",
+      "script_en": "May I have your attention please. This is a scheduled fire drill. All employees are asked to calmly exit the building using the nearest stairwell and proceed to the designated assembly point in the north parking lot. Please do not use the elevators.",
+      "questions": [{ "q": "What should employees avoid using during the drill?", "options": ["Stairwells", "Elevators", "Fire extinguishers", "Emergency exits"], "correct_index": 1 }]
+    },
+    {
+      "id": 6,
+      "topic_zh": "客戶語音留言",
+      "script_en": "Hi, this is Robert from Clearview Industries. I'm calling about the invoice we received yesterday. There seems to be a discrepancy in the total amount compared to our original purchase order. Could someone from your billing department give me a call back? I'd like to resolve this before the end of the week.",
+      "questions": [{ "q": "Why is Robert calling?", "options": ["To place a new order", "To report a billing discrepancy", "To cancel a contract", "To request a refund"], "correct_index": 1 }]
+    },
+    {
+      "id": 7,
+      "topic_zh": "研討會報到廣播",
+      "script_en": "Good morning, everyone, and welcome to the annual Business Innovation Summit. Registration is currently open in the main lobby, and we ask that all attendees pick up their name badges before entering the auditorium. The opening keynote will begin at 9:30, so please be seated by 9:20.",
+      "questions": [{ "q": "What should attendees do before entering the auditorium?", "options": ["Submit a feedback form", "Pick up their name badges", "Pay a registration fee", "Choose their seating"], "correct_index": 1 }]
+    },
+    {
+      "id": 8,
+      "topic_zh": "公司全員會議通知",
+      "script_en": "This is a reminder that our quarterly all-hands meeting will take place this Friday at 2 P.M. in the main auditorium. CEO Lisa Tran will present the company's third-quarter results and outline plans for the upcoming year. Attendance is mandatory for all full-time staff.",
+      "questions": [{ "q": "Who is required to attend the meeting?", "options": ["Only department managers", "All full-time staff", "New hires only", "Remote employees only"], "correct_index": 1 }]
+    }
+  ]
+}
