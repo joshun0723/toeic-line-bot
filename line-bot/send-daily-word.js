@@ -1,15 +1,23 @@
 /**
  * send-daily-word.js
  *
- * 每天執行一次，從共用單字庫挑出「今天的單字」，
+ * 每天執行一次，組合當天的「晨間通勤讀書包」：
+ *   - 單字（6個，來自 data/toeic_vocab.json）
+ *   - 文法練習題（1題，來自 data/toeic_daily_content.json）
+ *   - 閱讀短文＋理解題（1篇，來自 data/toeic_daily_content.json）
+ *   - 聽力短文語音＋理解題（1篇，音檔由 generate-audio.js 產生）
+ *   - 解答（文法/閱讀/聽力答案一起送出）
  * 透過 LINE Messaging API 的 Push Message 端點推播給 Jo。
  *
  * 需要的環境變數（不要寫死在程式碼裡，用 GitHub Actions Secrets 設定）：
- *   LINE_CHANNEL_ACCESS_TOKEN  - LINE Developers Console 取得的 Channel access token
- *   LINE_USER_ID               - 要推播對象的 User ID（自己的帳號）
+ *   LINE_CHANNEL_ACCESS_TOKEN   - LINE Developers Console 取得的 Channel access token
+ *   LINE_USER_ID                - 要推播對象的 User ID（自己的帳號）
+ *   LINE_AUDIO_URL               - （選填）聽力音檔的公開網址，GitHub Actions 自動產生
+ *   LINE_AUDIO_DURATION_MS       - （選填）聽力音檔長度（毫秒）
  *
- * 挑字邏輯：用「從今天算起經過的天數」對單字總數取餘數，
- * 這樣可以確保每天不同、且會照順序循環，不需要額外的資料庫記錄進度。
+ * 挑選邏輯：用「從 epoch 起經過的天數」對各類內容的總數量取餘數，
+ * 這樣每天都不同、照順序循環，不需要額外的資料庫記錄進度。
+ * 單字、文法、閱讀、聽力各自獨立循環（長度不同），所以組合久了不會一直重複。
  */
 
 const fs = require("fs");
@@ -17,22 +25,21 @@ const path = require("path");
 const https = require("https");
 
 const VOCAB_PATH = path.join(__dirname, "..", "data", "toeic_vocab.json");
-const WORDS_PER_DAY = 3;
+const CONTENT_PATH = path.join(__dirname, "..", "data", "toeic_daily_content.json");
+const WORDS_PER_DAY = 6;
 const LINE_PUSH_URL = "https://api.line.me/v2/bot/message/push";
+const LETTERS = ["A", "B", "C", "D"];
 
-function loadVocab() {
-  const raw = fs.readFileSync(VOCAB_PATH, "utf-8");
-  const data = JSON.parse(raw);
-  if (!Array.isArray(data.words) || data.words.length === 0) {
-    throw new Error("單字庫是空的，請確認 data/toeic_vocab.json");
-  }
-  return data.words;
+function loadJSON(p) {
+  return JSON.parse(fs.readFileSync(p, "utf-8"));
 }
 
-function pickTodaysWords(words, count) {
-  // 用 UTC 日期算出「從 epoch 起的第幾天」，確保每天固定、不會重覆推播同一天內容
-  const dayIndex = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
-  const start = (dayIndex * count) % words.length;
+function dayIndex() {
+  return Math.floor(Date.now() / (1000 * 60 * 60 * 24));
+}
+
+function pickWords(words, count) {
+  const start = (dayIndex() * count) % words.length;
   const picked = [];
   for (let i = 0; i < count; i++) {
     picked.push(words[(start + i) % words.length]);
@@ -40,16 +47,75 @@ function pickTodaysWords(words, count) {
   return picked;
 }
 
-function formatMessage(words) {
-  const lines = [`📚 今日多益單字 (${new Date().toISOString().slice(0, 10)})`, ""];
+function pickToday(items) {
+  return items[dayIndex() % items.length];
+}
+
+function formatOptions(options) {
+  return options.map((opt, i) => `　(${LETTERS[i]}) ${opt}`).join("\n");
+}
+
+function buildVocabAndGrammarAndReadingMessage(words, grammar, reading) {
+  const lines = [`📚 晨間讀書包 (${new Date().toISOString().slice(0, 10)})`, ""];
+
+  lines.push("── 單字 ──");
   words.forEach((w, idx) => {
-    lines.push(`${idx + 1}. ${w.word} (${w.pos})`);
-    lines.push(`　${w.meaning_zh}`);
-    lines.push(`　例句: ${w.example_en}`);
-    lines.push(`　　${w.example_zh}`);
+    lines.push(`${idx + 1}. ${w.word} (${w.pos}) ${w.meaning_zh}`);
+    lines.push(`　${w.example_en}`);
+  });
+
+  lines.push("", "── 文法練習 ──");
+  lines.push(`重點：${grammar.topic}`);
+  lines.push(grammar.explanation_zh);
+  lines.push(`例句：${grammar.example_en}`);
+  lines.push("");
+  lines.push("練習題：");
+  lines.push(grammar.question_stem);
+  lines.push(formatOptions(grammar.options));
+
+  lines.push("", "── 閱讀 ──");
+  lines.push(`【${reading.title_zh}】`);
+  lines.push(reading.passage_en);
+  reading.questions.forEach((q, i) => {
+    lines.push("");
+    lines.push(`Q${i + 1}. ${q.q}`);
+    lines.push(formatOptions(q.options));
+  });
+
+  lines.push("", "🎧 聽力練習音檔在下一則訊息，聽完再看下下則的題目喔！");
+
+  return lines.join("\n");
+}
+
+function buildListeningQuestionMessage(listening) {
+  const lines = [`🎧 聽力理解（主題：${listening.topic_zh}）`, ""];
+  listening.questions.forEach((q, i) => {
+    lines.push(`Q${i + 1}. ${q.q}`);
+    lines.push(formatOptions(q.options));
     lines.push("");
   });
-  lines.push("加油！離滿分更近一步 💪");
+  lines.push("答案在下一則訊息，建議先自己作答完再看喔！");
+  return lines.join("\n");
+}
+
+function buildAnswerKeyMessage(grammar, reading, listening) {
+  const lines = ["✅ 今日解答", ""];
+
+  lines.push("【文法】");
+  lines.push(`正解：(${LETTERS[grammar.correct_index]}) ${grammar.options[grammar.correct_index]}`);
+  lines.push(grammar.answer_explanation_zh);
+
+  lines.push("", "【閱讀】");
+  reading.questions.forEach((q, i) => {
+    lines.push(`Q${i + 1} 正解：(${LETTERS[q.correct_index]}) ${q.options[q.correct_index]}`);
+  });
+
+  lines.push("", "【聽力】");
+  listening.questions.forEach((q, i) => {
+    lines.push(`Q${i + 1} 正解：(${LETTERS[q.correct_index]}) ${q.options[q.correct_index]}`);
+  });
+
+  lines.push("", "今天也辛苦了，明天通勤時間見 💪");
   return lines.join("\n");
 }
 
@@ -103,31 +169,44 @@ async function main() {
     process.exit(1);
   }
 
-  const words = loadVocab();
-  const todaysWords = pickTodaysWords(words, WORDS_PER_DAY);
-  const message = formatMessage(todaysWords);
+  const vocabData = loadJSON(VOCAB_PATH);
+  const content = loadJSON(CONTENT_PATH);
 
-  console.log("準備推播內容：\n" + message);
+  if (!Array.isArray(vocabData.words) || vocabData.words.length === 0) {
+    throw new Error("單字庫是空的，請確認 data/toeic_vocab.json");
+  }
 
-  const messages = [{ type: "text", text: message }];
+  const words = pickWords(vocabData.words, WORDS_PER_DAY);
+  const grammar = pickToday(content.grammar_points);
+  const reading = pickToday(content.reading_passages);
+  const listening = pickToday(content.listening_scripts);
 
-  // 語音檔是選擇性附加的：如果當次執行有成功產生語音並上傳，
+  const messages = [
+    { type: "text", text: buildVocabAndGrammarAndReadingMessage(words, grammar, reading) },
+  ];
+
+  // 語音是選擇性附加的：如果當次執行有成功產生語音並上傳，
   // GitHub Actions 會傳入這兩個環境變數；沒有的話（例如語音產生失敗）
-  // 就只送文字，不會讓整次推播失敗。
+  // 就跳過語音跟聽力題目訊息，只送文字＋解答，不會讓整次推播失敗。
   const audioUrl = (process.env.LINE_AUDIO_URL || "").trim();
   const audioDurationMs = parseInt(process.env.LINE_AUDIO_DURATION_MS || "", 10);
+  const hasAudio = audioUrl && Number.isFinite(audioDurationMs) && audioDurationMs > 0;
 
-  if (audioUrl && Number.isFinite(audioDurationMs) && audioDurationMs > 0) {
+  if (hasAudio) {
     messages.push({
       type: "audio",
       originalContentUrl: audioUrl,
       duration: audioDurationMs,
     });
-    console.log(`附加語音訊息：${audioUrl}（長度 ${audioDurationMs}ms）`);
+    messages.push({ type: "text", text: buildListeningQuestionMessage(listening) });
+    console.log(`附加聽力語音：${audioUrl}（長度 ${audioDurationMs}ms）`);
   } else {
-    console.log("本次沒有附加語音訊息（只送文字）。");
+    console.log("本次沒有聽力語音（語音產生失敗或跳過），只送文字內容。");
   }
 
+  messages.push({ type: "text", text: buildAnswerKeyMessage(grammar, reading, listening) });
+
+  console.log(`本次共送出 ${messages.length} 則訊息`);
   await pushMessages(token, userId, messages);
   console.log("推播成功！");
 }
